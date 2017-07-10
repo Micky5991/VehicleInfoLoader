@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
-// ReSharper disable InconsistentNaming
+﻿// ReSharper disable InconsistentNaming
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace VehicleInfoLoader.data
 {
     public sealed class VehicleModType
     {
         public int amount { get; internal set; }
+        
+        [JsonProperty]
         internal Dictionary<int, VehicleMod> list;
 
         public VehicleMod Mod(int mod)  => this.list?[mod];
