@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using GrandTheftMultiplayer.Server.Elements;
 using GrandTheftMultiplayer.Shared;
 using Newtonsoft.Json;
 
@@ -36,9 +35,11 @@ namespace VehicleInfoLoader.data
         internal VehicleLiveries liveries;
         
         
-        
 
+        public bool HasMod(int type, int mod = 0) => Mod(type, mod) != null;
+        public bool HasMods() => this.mods.Any();
         public VehicleModType ModType(int type) => mods?[type];
+        
         public VehicleMod Mod(int type, int mod)
         {
             if (this.mods == null || !this.mods.ContainsKey(type)) return null;
@@ -56,11 +57,27 @@ namespace VehicleInfoLoader.data
             if (!HasMod(type)) return Enumerable.Empty<VehicleMod>();
             return ModType(type)?.list?.Values ?? Enumerable.Empty<VehicleMod>();
         }
-        
-        public bool HasMod(int type, int mod = 0) => Mod(type, mod) != null;
+
+        public bool HasLivery(int id) => Livery(id) != null;
+        public bool HasLiveries() => this.LiveryIds().Any();
+
+        public IEnumerable<int> LiveryIds()
+        {
+            return this.liveries?.list?.Keys ?? Enumerable.Empty<int>();
+        }
+
+        public IEnumerable<Livery> Liveries()
+        {
+            return this.liveries?.list?.Values ?? Enumerable.Empty<Livery>();
+        }
+
+        public Livery Livery(int id)
+        {
+            if (!HasLiveries()) return null;
+            return this.liveries?.list[id] ?? null;
+        }
+
 
 
     }
-    
-    
 }
