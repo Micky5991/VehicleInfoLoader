@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using GrandTheftMultiplayer.Server.API;
 using GrandTheftMultiplayer.Server.Constant;
@@ -34,16 +35,22 @@ namespace VehicleInfoLoader
                 var vehicleManifest = JsonConvert.DeserializeObject<VehicleManifest>(File.ReadAllText(path), 
                     new JsonSerializerSettings{ ContractResolver = new EnableWriteableInternal()});
                 
-                API.shared.consoleOutput(JsonConvert.SerializeObject(vehicleManifest));
-                
                 Vehicles.Add((int)vehicleManifest.hash, vehicleManifest);
                 return vehicleManifest;
             }
-            catch (JsonSerializationException e)
+            catch (JsonReaderException e)
             {
                 API.shared.consoleOutput(LogCat.Error, "[VehicleInfo] An error occured while reading '" + path + "': " + e.Message);
                 return null;
             }
+        }
+
+        public static void Load()
+        {
+            API.shared.consoleOutput(LogCat.Info, "[VehicleInfo] Loading all vehiclemanifests...");
+            string[] files = Directory.GetFiles(basePath, "*.json");
+            foreach (var file in files) Get(Convert.ToInt32(Path.GetFileNameWithoutExtension(file)));
+            API.shared.consoleOutput(LogCat.Info, "[VehicleInfo] Loading completed!");
         }
 
         public static void Setup(string path)
