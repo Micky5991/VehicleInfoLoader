@@ -1,15 +1,14 @@
-﻿using System.Collections.Generic;
+﻿// ReSharper disable InconsistentNaming
+using System.Collections.Generic;
 using System.Linq;
 using GrandTheftMultiplayer.Shared;
 using Newtonsoft.Json;
-
-// ReSharper disable InconsistentNaming
 
 namespace VehicleInfoLoader.data
 {
     public sealed class VehicleManifest
     {
-        internal VehicleHash hash;
+        public VehicleHash hash              { get; internal set; }
         public string name                   { get; internal set; }
         public string displayName            { get; internal set; }
         public string localizedName          { get; internal set; }
@@ -39,6 +38,7 @@ namespace VehicleInfoLoader.data
         public bool HasMod(int type, int mod = 0) => Mod(type, mod) != null;
         public bool HasMods() => this.mods.Any();
         public VehicleModType ModType(int type) => mods?[type];
+        public IEnumerable<int> ModTypes() => mods?.Keys ?? Enumerable.Empty<int>();
         
         public VehicleMod Mod(int type, int mod)
         {
@@ -73,11 +73,8 @@ namespace VehicleInfoLoader.data
 
         public Livery Livery(int id)
         {
-            if (!HasLiveries()) return null;
-            return this.liveries?.list[id] ?? null;
+            return !this.HasLiveries() ? null : this.liveries?.list[id];
         }
-
-
 
     }
 }

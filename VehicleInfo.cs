@@ -12,17 +12,17 @@ namespace VehicleInfoLoader
     public sealed class VehicleInfo
     {
         private static string basePath = "vehicleinfo/";
-        private static readonly Dictionary<VehicleHash, VehicleManifest> Vehicles = new Dictionary<VehicleHash, VehicleManifest>();
+        private static readonly Dictionary<int, VehicleManifest> Vehicles = new Dictionary<int, VehicleManifest>();
 
         public static VehicleManifest Get(string vehiclename) => Get((VehicleHash) API.shared.getHashKey(vehiclename));
         public static VehicleManifest Get(Vehicle vehicle)    => Get(vehicle.model);
-        public static VehicleManifest Get(int hash)           => Get((VehicleHash) hash);
+        public static VehicleManifest Get(VehicleHash hash) => Get((int) hash);
         
-        public static VehicleManifest Get(VehicleHash vehicle)
+        public static VehicleManifest Get(int vehicle)
         {
             if (Vehicles.ContainsKey(vehicle)) return Vehicles[vehicle];
             
-            string path = MakePath((int) vehicle + ".json");
+            string path = MakePath(vehicle + ".json");
             if (!File.Exists(path))
             {
                 API.shared.consoleOutput(LogCat.Error, "[VehicleInfo] Could not find '" + path + "'");
@@ -33,7 +33,10 @@ namespace VehicleInfoLoader
             {
                 var vehicleManifest = JsonConvert.DeserializeObject<VehicleManifest>(File.ReadAllText(path), 
                     new JsonSerializerSettings{ ContractResolver = new EnableWriteableInternal()});
-                Vehicles.Add(vehicleManifest.hash, vehicleManifest);
+                
+                API.shared.consoleOutput(JsonConvert.SerializeObject(vehicleManifest));
+                
+                Vehicles.Add((int)vehicleManifest.hash, vehicleManifest);
                 return vehicleManifest;
             }
             catch (JsonSerializationException e)
