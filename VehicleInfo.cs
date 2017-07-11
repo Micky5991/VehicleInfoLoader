@@ -45,6 +45,16 @@ namespace VehicleInfoLoader
             }
         }
 
+        
+        public static void Remove(string vehiclename) => Remove((VehicleHash) API.shared.getHashKey(vehiclename));
+        public static void Remove(Vehicle vehicle)    => Remove(vehicle.model);
+        public static void Remove(VehicleHash hash)   => Remove((int) hash);
+
+        public static void Remove(int vehicle)        => Vehicles.Remove(vehicle);
+
+        public static void Clear() => Vehicles.Clear();
+        
+
         public static void Load()
         {
             API.shared.consoleOutput(LogCat.Info, "[VehicleInfo] Loading all vehiclemanifests...");

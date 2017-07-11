@@ -54,7 +54,7 @@
     <Compile Include="data\Livery.cs" />
     <Compile Include="data\VehicleManifest.cs" />
     <Compile Include="data\VehicleDimensions.cs" />
-    <Compile Include="data\VehicleLiveries.cs" />
+    <Compile Include="data\LiveryCollection.cs" />
     <Compile Include="data\VehicleMod.cs" />
     <Compile Include="data\VehicleModType.cs" />
     <Compile Include="JsonDeserialize.cs" />

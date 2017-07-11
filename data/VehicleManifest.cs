@@ -31,7 +31,7 @@ namespace VehicleInfoLoader.data
         internal Dictionary<int, VehicleModType> mods;
         
         [JsonProperty]
-        internal VehicleLiveries liveries;
+        internal LiveryCollection liveries;
         
         
 
