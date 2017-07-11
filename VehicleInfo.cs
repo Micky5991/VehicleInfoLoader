@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using GrandTheftMultiplayer.Server.API;
 using GrandTheftMultiplayer.Server.Constant;
 using GrandTheftMultiplayer.Server.Elements;
@@ -16,7 +18,7 @@ namespace VehicleInfoLoader
         private static bool cache = true;
         private static readonly Dictionary<int, VehicleManifest> Vehicles = new Dictionary<int, VehicleManifest>();
 
-        public static VehicleManifest Get(string vehiclename) => Get((VehicleHash) API.shared.getHashKey(vehiclename));
+        public static VehicleManifest Get(string vehiclename) => Get(API.shared.getHashKey(vehiclename));
         public static VehicleManifest Get(Vehicle vehicle)    => Get(vehicle.model);
         public static VehicleManifest Get(VehicleHash hash)   => Get((int) hash);
         
@@ -45,9 +47,36 @@ namespace VehicleInfoLoader
                 return null;
             }
         }
-
         
-        public static void Remove(string vehiclename) => Remove((VehicleHash) API.shared.getHashKey(vehiclename));
+        /*
+        public static Task<VehicleManifest> GetAsync(string vehiclename) => GetAsync(API.shared.getHashKey(vehiclename));
+        public static Task<VehicleManifest> GetAsync(Vehicle vehicle)    => GetAsync(vehicle.model);
+        public static Task<VehicleManifest> GetAsync(VehicleHash hash)   => GetAsync((int) hash);
+        
+        public static Task<VehicleManifest> GetAsync(int vehicle)
+        {
+            var tsc = new TaskCompletionSource<VehicleManifest>();
+            
+            var task = new ThreadStart(() => GetSync(tsc, vehicle));
+            API.shared.startThread(task);
+            
+            return tsc.Task;
+        }
+
+        private static void GetSync(TaskCompletionSource<VehicleManifest> tcs, int vehicle)
+        {
+            try
+            {
+                tcs.SetResult(Get(vehicle));
+            }
+            catch (Exception e)
+            {
+                tcs.SetException(e);
+            }
+        }
+        */
+        
+        public static void Remove(string vehiclename) => Remove(API.shared.getHashKey(vehiclename));
         public static void Remove(Vehicle vehicle)    => Remove(vehicle.model);
         public static void Remove(VehicleHash hash)   => Remove((int) hash);
 
