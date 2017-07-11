@@ -13,15 +13,16 @@ namespace VehicleInfoLoader
     public sealed class VehicleInfo
     {
         private static string basePath = "vehicleinfo/";
+        private static bool cache = true;
         private static readonly Dictionary<int, VehicleManifest> Vehicles = new Dictionary<int, VehicleManifest>();
 
         public static VehicleManifest Get(string vehiclename) => Get((VehicleHash) API.shared.getHashKey(vehiclename));
         public static VehicleManifest Get(Vehicle vehicle)    => Get(vehicle.model);
-        public static VehicleManifest Get(VehicleHash hash) => Get((int) hash);
+        public static VehicleManifest Get(VehicleHash hash)   => Get((int) hash);
         
         public static VehicleManifest Get(int vehicle)
         {
-            if (Vehicles.ContainsKey(vehicle)) return Vehicles[vehicle];
+            if (cache && Vehicles.ContainsKey(vehicle)) return Vehicles[vehicle];
             
             string path = MakePath(vehicle + ".json");
             if (!File.Exists(path))
@@ -35,7 +36,7 @@ namespace VehicleInfoLoader
                 var vehicleManifest = JsonConvert.DeserializeObject<VehicleManifest>(File.ReadAllText(path), 
                     new JsonSerializerSettings{ ContractResolver = new EnableWriteableInternal()});
                 
-                Vehicles.Add((int)vehicleManifest.hash, vehicleManifest);
+                if(cache) Vehicles.Add((int)vehicleManifest.hash, vehicleManifest);
                 return vehicleManifest;
             }
             catch (JsonReaderException e)
@@ -63,9 +64,10 @@ namespace VehicleInfoLoader
             API.shared.consoleOutput(LogCat.Info, "[VehicleInfo] Loading completed!");
         }
 
-        public static void Setup(string path)
+        public static void Setup(string path, bool cache)
         {
             VehicleInfo.basePath = path;
+            VehicleInfo.cache = cache;
         }
 
         internal static string MakePath(string relativePath)
