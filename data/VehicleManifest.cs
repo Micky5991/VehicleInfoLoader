@@ -35,10 +35,11 @@ namespace VehicleInfoLoader.data
         
         
 
+        public bool HasMods => this.mods.Any();
+        public IEnumerable<int> ModTypes => mods?.Keys ?? Enumerable.Empty<int>();
+        
         public bool HasMod(int type, int mod = 0) => Mod(type, mod) != null;
-        public bool HasMods() => this.mods.Any();
         public VehicleModType ModType(int type) => mods?[type];
-        public IEnumerable<int> ModTypes() => mods?.Keys ?? Enumerable.Empty<int>();
         
         public VehicleMod Mod(int type, int mod)
         {
@@ -58,23 +59,13 @@ namespace VehicleInfoLoader.data
             return ModType(type)?.list?.Values ?? Enumerable.Empty<VehicleMod>();
         }
 
-        public bool HasLivery(int id) => Livery(id) != null;
-        public bool HasLiveries() => this.LiveryIds().Any();
+        public bool HasLiveries                 => this.LiveryIds.Any();
+        public IEnumerable<int> LiveryIds       => this.liveries?.list?.Keys ?? Enumerable.Empty<int>();
+        public IEnumerable<Livery> Liveries     => this.liveries?.list?.Values ?? Enumerable.Empty<Livery>();
+        public int LiveryCount                  => Liveries.Count();
 
-        public IEnumerable<int> LiveryIds()
-        {
-            return this.liveries?.list?.Keys ?? Enumerable.Empty<int>();
-        }
-
-        public IEnumerable<Livery> Liveries()
-        {
-            return this.liveries?.list?.Values ?? Enumerable.Empty<Livery>();
-        }
-
-        public Livery Livery(int id)
-        {
-            return !this.HasLiveries() ? null : this.liveries?.list[id];
-        }
+        public bool HasLivery(int id)           => Livery(id) != null;
+        public Livery Livery(int id)            => !this.HasLiveries ? null : this.liveries?.list[id];
 
     }
 }

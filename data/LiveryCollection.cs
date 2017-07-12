@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace VehicleInfoLoader.data
 {
-    public sealed class LiveryCollection
+    internal sealed class LiveryCollection
     {
         public int amount { get; internal set; }
 

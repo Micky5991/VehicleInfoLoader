@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace VehicleInfoLoader.data
 {
-    public class VehicleMod
+    public sealed class VehicleMod
     {
         public string name             { get; internal set; }
         
