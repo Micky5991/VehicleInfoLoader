@@ -14,6 +14,9 @@ This library utilizes the [Micky5991/GT-MP-vehicleInfo](https://github.com/Micky
 5. Unpack the full zip file in the subfolder **vehicleinfo** of your serverfolder.
 6. Add a reference to that VehicleInfo.dll in your Project --> [Tutorial for VisualStudio](https://msdn.microsoft.com/en-us/library/wkze6zky.aspx)
 
+## Documentation
+[WIKI](https://github.com/Micky5991/VehicleInfoLoader/wiki)
+
 ## Changelog
 
 ### V1.0.0
