@@ -19,6 +19,9 @@ This library utilizes the [Micky5991/GT-MP-vehicleInfo](https://github.com/Micky
 ### V1.0.0
 * Initial release
 
+## Todo
+* Implement an asynchronous way to receive the VehicleManifest
+
 ## License
 MIT License
 
