@@ -51,12 +51,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="data\Livery.cs" />
-    <Compile Include="data\VehicleManifest.cs" />
-    <Compile Include="data\VehicleDimensions.cs" />
-    <Compile Include="data\LiveryCollection.cs" />
-    <Compile Include="data\VehicleMod.cs" />
-    <Compile Include="data\VehicleModType.cs" />
+    <Compile Include="Data\Livery.cs" />
+    <Compile Include="Data\VehicleManifest.cs" />
+    <Compile Include="Data\VehicleDimensions.cs" />
+    <Compile Include="Data\LiveryCollection.cs" />
+    <Compile Include="Data\VehicleMod.cs" />
+    <Compile Include="Data\VehicleModType.cs" />
     <Compile Include="JsonDeserialize.cs" />
     <Compile Include="VehicleInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

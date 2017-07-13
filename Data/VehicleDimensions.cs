@@ -1,7 +1,7 @@
 ﻿// ReSharper disable InconsistentNaming
 using GrandTheftMultiplayer.Shared.Math;
 
-namespace VehicleInfoLoader.data
+namespace VehicleInfoLoader.Data
 {
     public class VehicleDimensions
     {

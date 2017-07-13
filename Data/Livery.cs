@@ -1,5 +1,5 @@
 ﻿// ReSharper disable InconsistentNaming
-namespace VehicleInfoLoader.data
+namespace VehicleInfoLoader.Data
 {
     public class Livery
     {

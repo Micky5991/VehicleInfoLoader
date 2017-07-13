@@ -1,5 +1,5 @@
 ﻿using GrandTheftMultiplayer.Server.Elements;
-using VehicleInfoLoader.data;
+using VehicleInfoLoader.Data;
 
 namespace VehicleInfoLoader
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace VehicleInfoLoader.data
+namespace VehicleInfoLoader.Data
 {
     public sealed class VehicleModType
     {

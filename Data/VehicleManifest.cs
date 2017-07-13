@@ -4,7 +4,7 @@ using System.Linq;
 using GrandTheftMultiplayer.Shared;
 using Newtonsoft.Json;
 
-namespace VehicleInfoLoader.data
+namespace VehicleInfoLoader.Data
 {
     public sealed class VehicleManifest
     {

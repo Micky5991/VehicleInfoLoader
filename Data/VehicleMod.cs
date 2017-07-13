@@ -1,7 +1,7 @@
 ﻿// ReSharper disable InconsistentNaming
 using System.Linq;
 
-namespace VehicleInfoLoader.data
+namespace VehicleInfoLoader.Data
 {
     public sealed class VehicleMod
     {
