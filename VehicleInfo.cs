@@ -17,8 +17,14 @@ namespace VehicleInfoLoader
         private static readonly Dictionary<int, VehicleManifest> Vehicles = new Dictionary<int, VehicleManifest>();
 
         public static VehicleManifest Get(string vehiclename) => Get(API.shared.getHashKey(vehiclename));
-        public static VehicleManifest Get(Vehicle vehicle)    => Get(vehicle.model);
+        public static VehicleManifest Get(Vehicle vehicle)    => vehicle == null ? null : Get(vehicle.model);
         public static VehicleManifest Get(VehicleHash hash)   => Get((int) hash);
+
+        public static VehicleManifest Get(NetHandle handle)
+        {
+            Vehicle vehicle = API.shared.getEntityFromHandle<Vehicle>(handle);
+            return vehicle == null ? null : Get(vehicle);
+        }
         
         public static VehicleManifest Get(int vehicle)
         {
