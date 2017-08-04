@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using GrandTheftMultiplayer.Server.API;
 using GrandTheftMultiplayer.Server.Constant;
 using GrandTheftMultiplayer.Server.Elements;
@@ -41,8 +44,14 @@ namespace VehicleInfoLoader
             {
                 var vehicleManifest = JsonConvert.DeserializeObject<VehicleManifest>(File.ReadAllText(path), 
                     new JsonSerializerSettings{ ContractResolver = new EnableWriteableInternal()});
-                
-                if(cache) Vehicles.Add((int)vehicleManifest.hash, vehicleManifest);
+
+                if (cache)
+                {
+                    lock (Vehicles)
+                    {
+                        Vehicles.Add((int)vehicleManifest.hash, vehicleManifest);
+                    }
+                }
                 return vehicleManifest;
             }
             catch (JsonReaderException e)
@@ -52,33 +61,12 @@ namespace VehicleInfoLoader
             }
         }
         
-        /*
-        public static Task<VehicleManifest> GetAsync(string vehiclename) => GetAsync(API.shared.getHashKey(vehiclename));
-        public static Task<VehicleManifest> GetAsync(Vehicle vehicle)    => GetAsync(vehicle.model);
-        public static Task<VehicleManifest> GetAsync(VehicleHash hash)   => GetAsync((int) hash);
         
-        public static Task<VehicleManifest> GetAsync(int vehicle)
-        {
-            var tsc = new TaskCompletionSource<VehicleManifest>();
-            
-            var task = new ThreadStart(() => GetSync(tsc, vehicle));
-            API.shared.startThread(task);
-            
-            return tsc.Task;
-        }
-
-        private static void GetSync(TaskCompletionSource<VehicleManifest> tcs, int vehicle)
-        {
-            try
-            {
-                tcs.SetResult(Get(vehicle));
-            }
-            catch (Exception e)
-            {
-                tcs.SetException(e);
-            }
-        }
-        */
+        public static async Task<VehicleManifest> GetAsync(string vehiclename) => await GetAsync(API.shared.getHashKey(vehiclename));
+        public static async Task<VehicleManifest> GetAsync(Vehicle vehicle)    => await GetAsync(vehicle.model);
+        public static async Task<VehicleManifest> GetAsync(VehicleHash hash)   => await GetAsync((int) hash);
+        public static async Task<VehicleManifest> GetAsync(int vehicle)        => await Task.Run(() => Get(vehicle));
+        
         
         public static void Remove(string vehiclename) => Remove(API.shared.getHashKey(vehiclename));
         public static void Remove(Vehicle vehicle)    => Remove(vehicle.model);
@@ -97,7 +85,7 @@ namespace VehicleInfoLoader
             API.shared.consoleOutput(LogCat.Info, "[VehicleInfo] Loading completed!");
         }
 
-        public static void Setup(string path, bool cache)
+        public static void Setup(string path, bool cache=true)
         {
             VehicleInfo.basePath = path;
             VehicleInfo.cache = cache;

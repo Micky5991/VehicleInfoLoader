@@ -1,5 +1,5 @@
-# Vehicle Information Library Loader V1.0.1
-This library utilizes the [Micky5991/GT-MP-vehicleInfo](https://github.com/Micky5991/GT-MP-vehicleInfo) and provides a simple way to get information about all vehicles in GTA V
+# Vehicle Information Library Loader V1.1.0
+This library utilizes the [Micky5991/GT-MP-vehicleInfo](https://github.com/Micky5991/GT-MP-vehicleInfo) and provides a simple way to get information about vehicles in GTA V
 
 ## Installation
 ### Requirements
@@ -8,16 +8,19 @@ This library utilizes the [Micky5991/GT-MP-vehicleInfo](https://github.com/Micky
 
 ### Steps
 1. Download the [latest version of the VehicleInfo.dll](https://github.com/Micky5991/VehicleInfoLoader/releases/latest) 
-2. Put that dll into the root GT-MP-serverfolder
+2. Copy the downloaded DLL into *your resource's folder*.
 3. Add the assembly to your meta.xml `<assembly ref="VehicleInfo.dll" />`
-4. Get the [appropiate version of Micky5991/GT-MP-vehicleInfo](https://github.com/Micky5991/GT-MP-vehicleInfo/releases)
-5. Unpack the full zip file in the subfolder **vehicleinfo** of your serverfolder.
+4. Get the [appropiate .ZIP of Micky5991/GT-MP-vehicleInfo](https://github.com/Micky5991/GT-MP-vehicleInfo/releases)
+5. Unpack the full zip file in the subfolder **vehicleinfo** of your serer.
 6. Add a reference to that VehicleInfo.dll in your Project --> [Tutorial for VisualStudio](https://msdn.microsoft.com/en-us/library/wkze6zky.aspx)
 
 ## Documentation
 [WIKI](https://github.com/Micky5991/VehicleInfoLoader/wiki)
 
 ## Changelog
+
+### V1.1.0
+* Added asynchronous methods to get a vehiclemanifest-object (+ extension)
 
 ### V1.0.1
 * Added Get by NetHandle method
@@ -26,7 +29,7 @@ This library utilizes the [Micky5991/GT-MP-vehicleInfo](https://github.com/Micky
 * Initial release
 
 ## Todo
-* Implement an asynchronous way to receive the VehicleManifest
+-
 
 ## License
 MIT License
