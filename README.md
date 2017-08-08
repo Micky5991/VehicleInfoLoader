@@ -1,4 +1,4 @@
-# Vehicle Information Library Loader V1.1.0
+# Vehicle Information Library Loader V1.2.0
 This library utilizes the [Micky5991/GT-MP-vehicleInfo](https://github.com/Micky5991/GT-MP-vehicleInfo) and provides a simple way to get information about vehicles in GTA V
 
 ## Installation
