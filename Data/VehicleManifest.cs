@@ -1,5 +1,6 @@
 ﻿// ReSharper disable InconsistentNaming
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using GrandTheftMultiplayer.Shared;
 using Newtonsoft.Json;
@@ -25,6 +26,19 @@ namespace VehicleInfoLoader.Data
         public bool neon                     { get; internal set; }
         public VehicleDimensions dimensions  { get; internal set; }
 
+        public ReadOnlyDictionary<string, int> bones { get; internal set; }
+        
+        public float maxSpeed                { get; internal set; }
+        public float maxBraking              { get; internal set; }
+        public float maxTraction             { get; internal set; }
+        public float maxAcceleration         { get; internal set; }
+        public float _0xBFBA3BA79CFF7EBF     { get; internal set; } 
+        public float _0x53409B5163D5B846     { get; internal set; }
+        public float _0xC6AD107DDC9054CC     { get; internal set; }
+        public float _0x5AA3F878A178C4FC     { get; internal set; }
+        public int maxNumberOfPassengers     { get; internal set; }
+        public int maxOccupants              { get; internal set; }
+        
         public string[] rewards              { get; internal set; }
         
         [JsonProperty]
@@ -66,6 +80,11 @@ namespace VehicleInfoLoader.Data
 
         public bool HasLivery(int id)           => Livery(id) != null;
         public Livery Livery(int id)            => !this.HasLiveries ? null : this.liveries?.list[id];
+
+        public bool HasBone(int boneIndex)      => this.bones.Any(k => k.Value == boneIndex);
+        public bool HasBone(string boneName)    => this.bones.ContainsKey(boneName);
+        public IEnumerable<string> GetBoneNames() => this.bones.Select(s => s.Key);
+        public IEnumerable<int> GetBoneIndexes()  => this.bones.Select(s => s.Value);
 
     }
 }
