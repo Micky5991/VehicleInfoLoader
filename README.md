@@ -19,6 +19,9 @@ This library utilizes the [Micky5991/GT-MP-vehicleInfo](https://github.com/Micky
 
 ## Changelog
 
+### V1.2.0
+* Updated to match VehicleInfo V1.3.0
+
 ### V1.1.0
 * Added asynchronous methods to get a vehiclemanifest-object (+ extension)
 
