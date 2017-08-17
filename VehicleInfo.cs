@@ -15,7 +15,7 @@ namespace VehicleInfoLoader
 {
     public sealed class VehicleInfo
     {
-        private static string basePath = "vehicleinfo/";
+        private static string basePath = $"vehicleinfo{Path.DirectorySeparatorChar}";
         private static bool cache = true;
         private static readonly Dictionary<int, VehicleManifest> Vehicles = new Dictionary<int, VehicleManifest>();
 
@@ -80,7 +80,7 @@ namespace VehicleInfoLoader
         public static void Load()
         {
             API.shared.consoleOutput(LogCat.Info, "[VehicleInfo] Loading all vehiclemanifests...");
-            string[] files = Directory.GetFiles(basePath, "*.json");
+            string[] files = Directory.GetFiles(MakePath(""), "*.json");
             foreach (var file in files) Get(Convert.ToInt32(Path.GetFileNameWithoutExtension(file)));
             API.shared.consoleOutput(LogCat.Info, "[VehicleInfo] Loading completed!");
         }
@@ -91,9 +91,16 @@ namespace VehicleInfoLoader
             VehicleInfo.cache = cache;
         }
 
+        public static void Setup(API api, string path = null, bool cache=true)
+        {
+            Setup(Path.Combine(api.getResourceFolder(), path ?? $"vehicleInfo{Path.DirectorySeparatorChar}"), cache);
+        }
+
+        internal static string MakePath() => MakePath("");
+        
         internal static string MakePath(string relativePath)
         {
-            return Path.Combine(basePath, relativePath);
+            return Path.GetFullPath(Path.Combine(basePath, relativePath));
         }
 
     }
