@@ -19,6 +19,10 @@ namespace VehicleInfoLoader.Data
         public int vehicleClass              { get; internal set; }
         public string vehicleClassName       { get; internal set; }
         public string localizedVehicleClass  { get; internal set; }
+        
+        public int wheelType                 { get; internal set; }
+        public string wheelTypeName          { get; internal set; }
+        public string localizedWheelType     { get; internal set; }
 
         public bool convertible              { get; internal set; }
         public bool electric                 { get; internal set; }
