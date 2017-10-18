@@ -1,4 +1,4 @@
-# Vehicle Information Library Loader V1.3.1
+# Vehicle Information Library Loader V1.4.0
 This library utilizes the [Micky5991/GT-MP-vehicleInfo](https://github.com/Micky5991/GT-MP-vehicleInfo) and provides a simple way to get information about vehicles in GTA V
 
 ## Installation
@@ -7,37 +7,25 @@ This library utilizes the [Micky5991/GT-MP-vehicleInfo](https://github.com/Micky
 * [Micky5991/GT-MP-vehicleInfo](https://github.com/Micky5991/GT-MP-vehicleInfo/releases)
 
 ### Steps
-1. Download the [latest version of the VehicleInfo.dll](https://github.com/Micky5991/VehicleInfoLoader/releases/latest) 
-2. Copy the downloaded DLL into *your resource's folder*.
-3. Add the assembly to your meta.xml `<assembly ref="VehicleInfo.dll" />`
-4. Get the [appropiate .ZIP of Micky5991/GT-MP-vehicleInfo](https://github.com/Micky5991/GT-MP-vehicleInfo/releases)
-5. Unpack the full zip file in the subfolder **vehicleinfo** of your serer.
-6. Add a reference to that VehicleInfo.dll in your Project --> [Tutorial for VisualStudio](https://msdn.microsoft.com/en-us/library/wkze6zky.aspx)
+1. Install the latest version of the VehicleInfoLoader from [NuGet](https://www.nuget.org/packages/VehicleInfoLoader)
+2. Add the assembly to your meta.xml `<assembly ref="VehicleInfo.dll" />`
+3. Get the [appropiate .ZIP of Micky5991/GT-MP-vehicleInfo](https://github.com/Micky5991/GT-MP-vehicleInfo/releases)
+4. Unpack the full zip file in the subfolder **vehicleinfo** of your serer.
 
 ## Documentation
 [WIKI](https://github.com/Micky5991/VehicleInfoLoader/wiki)
 
 ## Changelog
+### V1.4.0
+* Renamed `VehicleInfo` to `VehicleInfoLoader`
+* Released package on [NuGet](https://www.nuget.org/packages/VehicleInfoLoader)
+
 ### V1.3.1
 * Updated depenencies of all referenced packages
 
 ### V1.3.0
 * Added support for vehicleInfo.json 1.4.0
 
-### V1.2.1
-* Changed internal path-generation to support different platforms
-
-### V1.2.0
-* Updated to match VehicleInfo V1.3.0
-
-### V1.1.0
-* Added asynchronous methods to get a vehiclemanifest-object (+ extension)
-
-### V1.0.1
-* Added Get by NetHandle method
-
-### V1.0.0
-* Initial release
 
 ## Todo
 -
