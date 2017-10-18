@@ -13,7 +13,7 @@ using VehicleInfoLoader.Data;
 
 namespace VehicleInfoLoader
 {
-    public sealed class VehicleInfo
+    public sealed class VehicleInfoLoader
     {
         private static string basePath = $"vehicleinfo{Path.DirectorySeparatorChar}";
         private static bool cache = true;
@@ -87,8 +87,8 @@ namespace VehicleInfoLoader
 
         public static void Setup(string path, bool cache=true)
         {
-            VehicleInfo.basePath = path;
-            VehicleInfo.cache = cache;
+            VehicleInfoLoader.basePath = path;
+            VehicleInfoLoader.cache = cache;
         }
 
         public static void Setup(API api, string path = null, bool cache=true)

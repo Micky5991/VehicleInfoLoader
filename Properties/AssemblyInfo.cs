@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("VehicleInfo")]
+[assembly: AssemblyTitle("VehicleInfoLoader")]
 [assembly: AssemblyDescription("This library utilizes the Micky5991/GT-MP-vehicleInfo and provides a simple way to get information about vehicles in GTA V")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("VehicleInfo")]
+[assembly: AssemblyProduct("VehicleInfoLoader")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.0.0
 MinimumVisualStudioVersion = 10.0.0.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleInfo", "VehicleInfo.csproj", "{844B4E2C-5CAB-4D1C-AC39-AD67DE56D365}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleInfoLoader", "VehicleInfoLoader.csproj", "{844B4E2C-5CAB-4D1C-AC39-AD67DE56D365}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

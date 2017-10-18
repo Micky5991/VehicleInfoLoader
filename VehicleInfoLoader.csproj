@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VehicleInfoLoader</RootNamespace>
-    <AssemblyName>VehicleInfo</AssemblyName>
+    <AssemblyName>VehicleInfoLoader</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -36,9 +36,6 @@
     <Reference Include="BCrypt.Net, Version=0.1.5073.29922, Culture=neutral, PublicKeyToken=6bcd409ee6bc9292">
       <HintPath>packages\BCrypt-Official.0.1.109\lib\BCrypt.Net.dll</HintPath>
     </Reference>
-    <Reference Include="GrandTheftMultiplayer.Server, Version=0.1.513.481, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\grandtheftmultiplayer.api.0.1.513.481\lib\net452\GrandTheftMultiplayer.Server.exe</HintPath>
-    </Reference>
     <Reference Include="GrandTheftMultiplayer.Server, Version=0.1.640.64, Culture=neutral, PublicKeyToken=null">
       <HintPath>packages\grandtheftmultiplayer.api.0.1.640.64\lib\net452\GrandTheftMultiplayer.Server.exe</HintPath>
     </Reference>
@@ -64,7 +61,7 @@
     <Compile Include="Data\VehicleMod.cs" />
     <Compile Include="Data\VehicleModType.cs" />
     <Compile Include="JsonDeserialize.cs" />
-    <Compile Include="VehicleInfo.cs" />
+    <Compile Include="VehicleInfoLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VehicleInfoExtensions.cs" />
   </ItemGroup>
