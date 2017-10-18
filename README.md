@@ -1,9 +1,9 @@
-# Vehicle Information Library Loader V1.3.0
+# Vehicle Information Library Loader V1.3.1
 This library utilizes the [Micky5991/GT-MP-vehicleInfo](https://github.com/Micky5991/GT-MP-vehicleInfo) and provides a simple way to get information about vehicles in GTA V
 
 ## Installation
 ### Requirements
-* [Newtonsoft.JSON 10.0.2](https://www.nuget.org/packages/Newtonsoft.Json/10.0.2) *(Already supplied by GT-MP)*
+* [Newtonsoft.JSON 10.0.3](https://www.nuget.org/packages/Newtonsoft.Json/10.0.3) *(Already supplied by GT-MP)*
 * [Micky5991/GT-MP-vehicleInfo](https://github.com/Micky5991/GT-MP-vehicleInfo/releases)
 
 ### Steps
@@ -18,6 +18,8 @@ This library utilizes the [Micky5991/GT-MP-vehicleInfo](https://github.com/Micky
 [WIKI](https://github.com/Micky5991/VehicleInfoLoader/wiki)
 
 ## Changelog
+### V1.3.1
+* Updated depenencies of all referenced packages
 
 ### V1.3.0
 * Added support for vehicleInfo.json 1.4.0
