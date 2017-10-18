@@ -8,9 +8,10 @@ This library utilizes the [Micky5991/GT-MP-vehicleInfo](https://github.com/Micky
 
 ### Steps
 1. Install the latest version of the VehicleInfoLoader from [NuGet](https://www.nuget.org/packages/VehicleInfoLoader)
-2. Add the assembly to your meta.xml `<assembly ref="VehicleInfo.dll" />`
-3. Get the [appropiate .ZIP of Micky5991/GT-MP-vehicleInfo](https://github.com/Micky5991/GT-MP-vehicleInfo/releases)
-4. Unpack the full zip file in the subfolder **vehicleinfo** of your serer.
+2. Copy the dll of this package to your **resource's root-folder**.
+3. Add the assembly to your meta.xml `<assembly ref="VehicleInfoLoader.dll" />`
+4. Get the [appropiate .ZIP of Micky5991/GT-MP-vehicleInfo](https://github.com/Micky5991/GT-MP-vehicleInfo/releases)
+5. Unpack the full zip file in the subfolder **vehicleinfo** of your serer.
 
 ## Documentation
 [WIKI](https://github.com/Micky5991/VehicleInfoLoader/wiki)
