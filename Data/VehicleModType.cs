@@ -11,7 +11,8 @@ namespace VehicleInfoLoader.Data
         [JsonProperty]
         internal Dictionary<int, VehicleMod> list;
 
-        public VehicleMod Mod(int mod)  => this.list?[mod];
+        public Dictionary<int, VehicleMod> Mods() => list;
+        public VehicleMod Mod(int mod)  => list?[mod];
         public bool HasMod(int mod)     => Mod(mod) != null;
 
     }

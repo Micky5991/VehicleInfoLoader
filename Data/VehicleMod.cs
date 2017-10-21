@@ -10,7 +10,7 @@ namespace VehicleInfoLoader.Data
         public string localizedName    { get; internal set; }
         public string[] flags          { get; internal set; }
 
-        public bool HasFlag(string flag) => this.flags.Contains(flag);
+        public bool HasFlag(string flag) => flags.Contains(flag);
 
     }
 }

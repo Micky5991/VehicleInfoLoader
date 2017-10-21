@@ -53,7 +53,7 @@ namespace VehicleInfoLoader.Data
         
         
 
-        public bool HasMods => this.mods.Any();
+        public bool HasMods => mods.Any();
         public IEnumerable<int> ModTypes => mods?.Keys ?? Enumerable.Empty<int>();
         
         public bool HasMod(int type, int mod = 0) => Mod(type, mod) != null;
@@ -61,7 +61,7 @@ namespace VehicleInfoLoader.Data
         
         public VehicleMod Mod(int type, int mod)
         {
-            if (this.mods == null || !this.mods.ContainsKey(type)) return null;
+            if (mods == null || !mods.ContainsKey(type)) return null;
             return ModType(type)?.Mod(mod);
         }
 
@@ -77,18 +77,18 @@ namespace VehicleInfoLoader.Data
             return ModType(type)?.list?.Values ?? Enumerable.Empty<VehicleMod>();
         }
 
-        public bool HasLiveries                 => this.LiveryIds.Any();
-        public IEnumerable<int> LiveryIds       => this.liveries?.list?.Keys ?? Enumerable.Empty<int>();
-        public IEnumerable<Livery> Liveries     => this.liveries?.list?.Values ?? Enumerable.Empty<Livery>();
+        public bool HasLiveries                 => LiveryIds.Any();
+        public IEnumerable<int> LiveryIds       => liveries?.list?.Keys ?? Enumerable.Empty<int>();
+        public IEnumerable<Livery> Liveries     => liveries?.list?.Values ?? Enumerable.Empty<Livery>();
         public int LiveryCount                  => Liveries.Count();
 
         public bool HasLivery(int id)           => Livery(id) != null;
-        public Livery Livery(int id)            => !this.HasLiveries ? null : this.liveries?.list[id];
+        public Livery Livery(int id)            => !HasLiveries ? null : liveries?.list[id];
 
-        public bool HasBone(int boneIndex)      => this.bones.Any(k => k.Value == boneIndex);
-        public bool HasBone(string boneName)    => this.bones.ContainsKey(boneName);
-        public IEnumerable<string> GetBoneNames() => this.bones.Select(s => s.Key);
-        public IEnumerable<int> GetBoneIndexes()  => this.bones.Select(s => s.Value);
+        public bool HasBone(int boneIndex)      => bones.Any(k => k.Value == boneIndex);
+        public bool HasBone(string boneName)    => bones.ContainsKey(boneName);
+        public IEnumerable<string> GetBoneNames() => bones.Select(s => s.Key);
+        public IEnumerable<int> GetBoneIndexes()  => bones.Select(s => s.Value);
 
     }
 }
