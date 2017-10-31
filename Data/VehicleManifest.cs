@@ -77,6 +77,11 @@ namespace VehicleInfoLoader.Data
             return ModType(type)?.list?.Values ?? Enumerable.Empty<VehicleMod>();
         }
 
+        public Dictionary<int, Dictionary<int, string>> ValidMods()
+        {
+            return mods.ToDictionary(m => m.Key, m => m.Value.Mods().ToDictionary(t => t.Key, t => t.Value.name));
+        }
+
         public bool HasLiveries                 => LiveryIds.Any();
         public IEnumerable<int> LiveryIds       => liveries?.list?.Keys ?? Enumerable.Empty<int>();
         public IEnumerable<Livery> Liveries     => liveries?.list?.Values ?? Enumerable.Empty<Livery>();
