@@ -12,7 +12,17 @@ namespace VehicleInfoLoader.Data
         internal Dictionary<int, VehicleMod> list;
 
         public IReadOnlyDictionary<int, VehicleMod> Mods() => list;
-        public VehicleMod Mod(int mod)  => list?[mod];
+        
+        public VehicleMod Mod(int mod)
+        {
+            if (list == null || !list.ContainsKey(mod))
+            {
+                return null;
+            }
+            
+            return list[mod];
+        }
+
         public bool HasMod(int mod)     => Mod(mod) != null;
 
     }
