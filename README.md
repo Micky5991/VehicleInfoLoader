@@ -1,4 +1,4 @@
-# Vehicle Information Library Loader V1.4.1
+# Vehicle Information Library Loader V1.4.2
 This library utilizes the [Micky5991/GT-MP-vehicleInfo](https://github.com/Micky5991/GT-MP-vehicleInfo) and provides a simple way to get information about vehicles in GTA V
 
 ## Installation
@@ -17,8 +17,14 @@ This library utilizes the [Micky5991/GT-MP-vehicleInfo](https://github.com/Micky
 [WIKI](https://github.com/Micky5991/VehicleInfoLoader/wiki)
 
 ## Changelog
+### V1.4.2
+* Added `VehicleManifest.ValidMods()`
+* Made loading of vehicle-manifest data thread-safe
+* Added check to VehicleModType.Mod() if specified mod in modtype exists. (Fixes #2)
+* **Changed return-type of VehicleModType.Mods() to `IReadOnlyDictionary<string, VehicleMod>`**
+
 ### V1.4.1
-* Added VehicleModType.GetMods()
+* Added VehicleModType.Mods()
 
 ### V1.4.0
 * Renamed `VehicleInfo` to `VehicleInfoLoader`
