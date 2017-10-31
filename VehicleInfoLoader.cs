@@ -31,7 +31,13 @@ namespace VehicleInfoLoader
         
         public static VehicleManifest Get(int vehicle)
         {
-            if (_cache && Vehicles.ContainsKey(vehicle)) return Vehicles[vehicle];
+            lock (Vehicles)
+            {
+                if (_cache && Vehicles.ContainsKey(vehicle))
+                {
+                    return Vehicles[vehicle];
+                }
+            }
             
             string path = MakePath(vehicle + ".json");
             if (!File.Exists(path))
@@ -72,9 +78,21 @@ namespace VehicleInfoLoader
         public static void Remove(Vehicle vehicle)    => Remove(vehicle.model);
         public static void Remove(VehicleHash hash)   => Remove((int) hash);
 
-        public static void Remove(int vehicle)        => Vehicles.Remove(vehicle);
+        public static void Remove(int vehicle)
+        {
+            lock (Vehicles)
+            {
+                Vehicles.Remove(vehicle);
+            }
+        } 
 
-        public static void Clear() => Vehicles.Clear();
+        public static void Clear()
+        {
+            lock (Vehicles)
+            {
+                Vehicles.Clear();
+            }
+        }
         
 
         public static void Load()
