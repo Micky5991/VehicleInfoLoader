@@ -36,7 +36,7 @@ namespace VehicleInfoLoader
 
             if (_cache)
             {
-                if (_vehicles.TryAdd(vehicleManifest.Hash, vehicleManifest) == false)
+                if (_vehicles.TryAdd((int) vehicleManifest.Hash, vehicleManifest) == false)
                 {
                     return null;
                 }

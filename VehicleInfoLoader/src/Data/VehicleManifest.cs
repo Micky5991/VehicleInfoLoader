@@ -8,7 +8,7 @@ namespace VehicleInfoLoader.Data
     public sealed class VehicleManifest
     {
         [JsonProperty("hash")]
-        public int Hash              { get; internal set; }
+        public uint Hash                     { get; internal set; }
         
         [JsonProperty("name")]
         public string Name                   { get; internal set; }
