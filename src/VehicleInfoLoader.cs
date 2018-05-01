@@ -2,10 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using GrandTheftMultiplayer.Server.API;
-using GrandTheftMultiplayer.Server.Constant;
-using GrandTheftMultiplayer.Server.Elements;
-using GrandTheftMultiplayer.Shared;
 using Newtonsoft.Json;
 using VehicleInfoLoader.Data;
 
@@ -16,27 +12,6 @@ namespace VehicleInfoLoader
         private static string _basePath = $"vehicleinfo{Path.DirectorySeparatorChar}";
         private static bool _cache = true;
         private static readonly Dictionary<int, VehicleManifest> Vehicles = new Dictionary<int, VehicleManifest>();
-
-        public static VehicleManifest Get(string vehiclename)
-        {
-            return Get(API.shared.getHashKey(vehiclename));
-        }
-
-        public static VehicleManifest Get(Vehicle vehicle)
-        {
-            return vehicle == null ? null : Get(vehicle.model);
-        }
-
-        public static VehicleManifest Get(VehicleHash hash)
-        {
-            return Get((int) hash);
-        }
-
-        public static VehicleManifest Get(NetHandle handle)
-        {
-            Vehicle vehicle = API.shared.getEntityFromHandle<Vehicle>(handle);
-            return vehicle == null ? null : Get(vehicle);
-        }
         
         public static VehicleManifest Get(int vehicle)
         {
@@ -51,64 +26,25 @@ namespace VehicleInfoLoader
             string path = MakePath(vehicle + ".json");
             if (!File.Exists(path))
             {
-                API.shared.consoleOutput(LogCat.Error, "[VehicleInfo] Could not find '" + path + "'");
-                return null;
+                throw new FileNotFoundException($"Could not find '{path}'");
             }
 
-            try
-            {
-                var vehicleManifest = JsonConvert.DeserializeObject<VehicleManifest>(File.ReadAllText(path), 
-                    new JsonSerializerSettings{ ContractResolver = new EnableWriteableInternal()});
+            var vehicleManifest = JsonConvert.DeserializeObject<VehicleManifest>(File.ReadAllText(path), 
+                new JsonSerializerSettings{ ContractResolver = new EnableWriteableInternal()});
 
-                if (_cache)
+            if (_cache)
+            {
+                lock (Vehicles)
                 {
-                    lock (Vehicles)
-                    {
-                        Vehicles.Add((int)vehicleManifest.Hash, vehicleManifest);
-                    }
+                    Vehicles.Add(vehicleManifest.Hash, vehicleManifest);
                 }
-                return vehicleManifest;
             }
-            catch (JsonReaderException e)
-            {
-                API.shared.consoleOutput(LogCat.Error, "[VehicleInfo] An error occured while reading '" + path + "': " + e.Message);
-                return null;
-            }
-        }
-        
-        public static async Task<VehicleManifest> GetAsync(string vehiclename)
-        {
-            return await GetAsync(API.shared.getHashKey(vehiclename));
-        }
-
-        public static async Task<VehicleManifest> GetAsync(Vehicle vehicle)
-        {
-            return await GetAsync(vehicle.model);
-        }
-
-        public static async Task<VehicleManifest> GetAsync(VehicleHash hash)
-        {
-            return await GetAsync((int) hash);
+            return vehicleManifest;
         }
 
         public static async Task<VehicleManifest> GetAsync(int vehicle)
         {
             return await Task.Run(() => Get(vehicle));
-        }
-
-        public static void Remove(string vehiclename)
-        {
-            Remove(API.shared.getHashKey(vehiclename));
-        }
-
-        public static void Remove(Vehicle vehicle)
-        {
-            Remove(vehicle.model);
-        }
-
-        public static void Remove(VehicleHash hash)
-        {
-            Remove((int) hash);
         }
 
         public static void Remove(int vehicle)
@@ -129,21 +65,18 @@ namespace VehicleInfoLoader
 
         public static void Load()
         {
-            API.shared.consoleOutput(LogCat.Info, "[VehicleInfo] Loading all vehiclemanifests...");
             string[] files = Directory.GetFiles(MakePath(""), "*.json");
-            foreach (var file in files) Get(Convert.ToInt32(Path.GetFileNameWithoutExtension(file)));
-            API.shared.consoleOutput(LogCat.Info, "[VehicleInfo] Loading completed!");
+            
+            foreach (var file in files)
+            {
+                Get(Convert.ToInt32(Path.GetFileNameWithoutExtension(file)));
+            }
         }
 
         public static void Setup(string path, bool cache=true)
         {
             _basePath = path;
             _cache = cache;
-        }
-
-        public static void Setup(API api, string path = null, bool cache=true)
-        {
-            Setup(Path.Combine(api.getResourceFolder(), path ?? $"vehicleInfo{Path.DirectorySeparatorChar}"), cache);
         }
 
         internal static string MakePath()

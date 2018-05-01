@@ -1,14 +1,14 @@
-﻿using GrandTheftMultiplayer.Shared.Math;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using VehicleInfoLoader.Models;
 
 namespace VehicleInfoLoader.Data
 {
     public class VehicleDimensions
     {
         [JsonProperty("min")]
-        public Vector3 Min { get; internal set; }
+        public Vector Min { get; internal set; }
         
         [JsonProperty("max")]
-        public Vector3 Max { get; internal set; }
+        public Vector Max { get; internal set; }
     }
 }

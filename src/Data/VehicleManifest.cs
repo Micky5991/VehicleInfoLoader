@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using GrandTheftMultiplayer.Shared;
 using Newtonsoft.Json;
 
 namespace VehicleInfoLoader.Data
@@ -9,7 +8,7 @@ namespace VehicleInfoLoader.Data
     public sealed class VehicleManifest
     {
         [JsonProperty("hash")]
-        public VehicleHash Hash              { get; internal set; }
+        public int Hash              { get; internal set; }
         
         [JsonProperty("name")]
         public string Name                   { get; internal set; }
