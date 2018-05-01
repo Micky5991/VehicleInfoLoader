@@ -11,15 +11,15 @@ namespace VehicleInfoLoader
     {
         private static string _basePath = $"vehicleinfo{Path.DirectorySeparatorChar}";
         private static bool _cache = true;
-        private static readonly Dictionary<int, VehicleManifest> Vehicles = new Dictionary<int, VehicleManifest>();
+        private static readonly Dictionary<int, VehicleManifest> _vehicles = new Dictionary<int, VehicleManifest>();
         
         public static VehicleManifest Get(int vehicle)
         {
-            lock (Vehicles)
+            lock (_vehicles)
             {
-                if (_cache && Vehicles.ContainsKey(vehicle))
+                if (_cache && _vehicles.ContainsKey(vehicle))
                 {
-                    return Vehicles[vehicle];
+                    return _vehicles[vehicle];
                 }
             }
             
@@ -29,16 +29,21 @@ namespace VehicleInfoLoader
                 throw new FileNotFoundException($"Could not find '{path}'");
             }
 
-            var vehicleManifest = JsonConvert.DeserializeObject<VehicleManifest>(File.ReadAllText(path), 
-                new JsonSerializerSettings{ ContractResolver = new EnableWriteableInternal()});
+            var vehicleManifest = JsonConvert.DeserializeObject<VehicleManifest>(
+                File.ReadAllText(path), 
+                new JsonSerializerSettings
+                {
+                    ContractResolver = new EnableWriteableInternal()
+                });
 
             if (_cache)
             {
-                lock (Vehicles)
+                lock (_vehicles)
                 {
-                    Vehicles.Add(vehicleManifest.Hash, vehicleManifest);
+                    _vehicles.Add(vehicleManifest.Hash, vehicleManifest);
                 }
             }
+            
             return vehicleManifest;
         }
 
@@ -49,23 +54,23 @@ namespace VehicleInfoLoader
 
         public static void Remove(int vehicle)
         {
-            lock (Vehicles)
+            lock (_vehicles)
             {
-                Vehicles.Remove(vehicle);
+                _vehicles.Remove(vehicle);
             }
         } 
 
         public static void Clear()
         {
-            lock (Vehicles)
+            lock (_vehicles)
             {
-                Vehicles.Clear();
+                _vehicles.Clear();
             }
         }
 
         public static void Load()
         {
-            string[] files = Directory.GetFiles(MakePath(""), "*.json");
+            string[] files = Directory.GetFiles(MakePath(), "*.json");
             
             foreach (var file in files)
             {
