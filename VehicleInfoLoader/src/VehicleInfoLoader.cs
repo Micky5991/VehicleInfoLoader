@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -11,16 +12,13 @@ namespace VehicleInfoLoader
     {
         private static string _basePath = $"vehicleinfo{Path.DirectorySeparatorChar}";
         private static bool _cache = true;
-        private static readonly Dictionary<int, VehicleManifest> _vehicles = new Dictionary<int, VehicleManifest>();
+        private static readonly ConcurrentDictionary<int, VehicleManifest> _vehicles = new ConcurrentDictionary<int, VehicleManifest>();
         
         public static VehicleManifest Get(int vehicle)
         {
-            lock (_vehicles)
+            if (_cache && _vehicles.TryGetValue(vehicle, out var manifest))
             {
-                if (_cache && _vehicles.ContainsKey(vehicle))
-                {
-                    return _vehicles[vehicle];
-                }
+                return manifest;
             }
             
             string path = MakePath(vehicle + ".json");
@@ -38,9 +36,9 @@ namespace VehicleInfoLoader
 
             if (_cache)
             {
-                lock (_vehicles)
+                if (_vehicles.TryAdd(vehicleManifest.Hash, vehicleManifest) == false)
                 {
-                    _vehicles.Add(vehicleManifest.Hash, vehicleManifest);
+                    return null;
                 }
             }
             
@@ -54,18 +52,12 @@ namespace VehicleInfoLoader
 
         public static void Remove(int vehicle)
         {
-            lock (_vehicles)
-            {
-                _vehicles.Remove(vehicle);
-            }
+            _vehicles.TryRemove(vehicle, out _);
         } 
 
         public static void Clear()
         {
-            lock (_vehicles)
-            {
-                _vehicles.Clear();
-            }
+            _vehicles.Clear();
         }
 
         public static void Load()
