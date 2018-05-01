@@ -17,9 +17,20 @@ namespace VehicleInfoLoader
         private static bool _cache = true;
         private static readonly Dictionary<int, VehicleManifest> Vehicles = new Dictionary<int, VehicleManifest>();
 
-        public static VehicleManifest Get(string vehiclename) => Get(API.shared.getHashKey(vehiclename));
-        public static VehicleManifest Get(Vehicle vehicle)    => vehicle == null ? null : Get(vehicle.model);
-        public static VehicleManifest Get(VehicleHash hash)   => Get((int) hash);
+        public static VehicleManifest Get(string vehiclename)
+        {
+            return Get(API.shared.getHashKey(vehiclename));
+        }
+
+        public static VehicleManifest Get(Vehicle vehicle)
+        {
+            return vehicle == null ? null : Get(vehicle.model);
+        }
+
+        public static VehicleManifest Get(VehicleHash hash)
+        {
+            return Get((int) hash);
+        }
 
         public static VehicleManifest Get(NetHandle handle)
         {
@@ -65,16 +76,40 @@ namespace VehicleInfoLoader
             }
         }
         
-        
-        public static async Task<VehicleManifest> GetAsync(string vehiclename) => await GetAsync(API.shared.getHashKey(vehiclename));
-        public static async Task<VehicleManifest> GetAsync(Vehicle vehicle)    => await GetAsync(vehicle.model);
-        public static async Task<VehicleManifest> GetAsync(VehicleHash hash)   => await GetAsync((int) hash);
-        public static async Task<VehicleManifest> GetAsync(int vehicle)        => await Task.Run(() => Get(vehicle));
-        
-        
-        public static void Remove(string vehiclename) => Remove(API.shared.getHashKey(vehiclename));
-        public static void Remove(Vehicle vehicle)    => Remove(vehicle.model);
-        public static void Remove(VehicleHash hash)   => Remove((int) hash);
+        public static async Task<VehicleManifest> GetAsync(string vehiclename)
+        {
+            return await GetAsync(API.shared.getHashKey(vehiclename));
+        }
+
+        public static async Task<VehicleManifest> GetAsync(Vehicle vehicle)
+        {
+            return await GetAsync(vehicle.model);
+        }
+
+        public static async Task<VehicleManifest> GetAsync(VehicleHash hash)
+        {
+            return await GetAsync((int) hash);
+        }
+
+        public static async Task<VehicleManifest> GetAsync(int vehicle)
+        {
+            return await Task.Run(() => Get(vehicle));
+        }
+
+        public static void Remove(string vehiclename)
+        {
+            Remove(API.shared.getHashKey(vehiclename));
+        }
+
+        public static void Remove(Vehicle vehicle)
+        {
+            Remove(vehicle.model);
+        }
+
+        public static void Remove(VehicleHash hash)
+        {
+            Remove((int) hash);
+        }
 
         public static void Remove(int vehicle)
         {

@@ -101,14 +101,26 @@ namespace VehicleInfoLoader.Data
         [JsonProperty("liveries")]
         internal LiveryCollection LiveryList;
         
-        
+        public bool HasMods
+        {
+            get { return ModList.Any(); }
+        }
 
-        public bool HasMods => ModList.Any();
-        public IEnumerable<int> ModTypes => ModList?.Keys ?? Enumerable.Empty<int>();
-        
-        public bool HasMod(int type, int mod = 0) => Mod(type, mod) != null;
-        public VehicleModType ModType(int type) => ModList?[type];
-        
+        public IEnumerable<int> ModTypes
+        {
+            get { return ModList?.Keys ?? Enumerable.Empty<int>(); }
+        }
+
+        public bool HasMod(int type, int mod = 0)
+        {
+            return Mod(type, mod) != null;
+        }
+
+        public VehicleModType ModType(int type)
+        {
+            return ModList?[type];
+        }
+
         public VehicleMod Mod(int type, int mod)
         {
             if (ModList == null || !ModList.ContainsKey(type)) return null;
@@ -132,18 +144,54 @@ namespace VehicleInfoLoader.Data
             return ModList.ToDictionary(m => m.Key, m => m.Value.Mods().ToDictionary(t => t.Key, t => t.Value.Name));
         }
 
-        public bool HasLiveries                 => LiveryIds.Any();
-        public IEnumerable<int> LiveryIds       => LiveryList?.List?.Keys ?? Enumerable.Empty<int>();
-        public IEnumerable<Livery> Liveries     => LiveryList?.List?.Values ?? Enumerable.Empty<Livery>();
-        public int LiveryCount                  => Liveries.Count();
+        public bool HasLiveries
+        {
+            get { return LiveryIds.Any(); }
+        }
 
-        public bool HasLivery(int id)           => Livery(id) != null;
-        public Livery Livery(int id)            => !HasLiveries ? null : LiveryList?.List[id];
+        public IEnumerable<int> LiveryIds
+        {
+            get { return LiveryList?.List?.Keys ?? Enumerable.Empty<int>(); }
+        }
 
-        public bool HasBone(int boneIndex)      => Bones.Any(k => k.Value == boneIndex);
-        public bool HasBone(string boneName)    => Bones.ContainsKey(boneName);
-        public IEnumerable<string> GetBoneNames() => Bones.Select(s => s.Key);
-        public IEnumerable<int> GetBoneIndexes()  => Bones.Select(s => s.Value);
+        public IEnumerable<Livery> Liveries
+        {
+            get { return LiveryList?.List?.Values ?? Enumerable.Empty<Livery>(); }
+        }
 
+        public int LiveryCount
+        {
+            get { return Liveries.Count(); }
+        }
+
+        public bool HasLivery(int id)
+        {
+            return Livery(id) != null;
+        }
+
+        public Livery Livery(int id)
+        {
+            return !HasLiveries ? null : LiveryList?.List[id];
+        }
+
+        public bool HasBone(int boneIndex)
+        {
+            return Bones.Any(k => k.Value == boneIndex);
+        }
+
+        public bool HasBone(string boneName)
+        {
+            return Bones.ContainsKey(boneName);
+        }
+
+        public IEnumerable<string> GetBoneNames()
+        {
+            return Bones.Select(s => s.Key);
+        }
+
+        public IEnumerable<int> GetBoneIndexes()
+        {
+            return Bones.Select(s => s.Value);
+        }
     }
 }
