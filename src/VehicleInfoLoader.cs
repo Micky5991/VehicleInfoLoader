@@ -53,7 +53,7 @@ namespace VehicleInfoLoader
                 {
                     lock (Vehicles)
                     {
-                        Vehicles.Add((int)vehicleManifest.hash, vehicleManifest);
+                        Vehicles.Add((int)vehicleManifest.Hash, vehicleManifest);
                     }
                 }
                 return vehicleManifest;

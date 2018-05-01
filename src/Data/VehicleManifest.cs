@@ -1,5 +1,4 @@
-﻿// ReSharper disable InconsistentNaming
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using GrandTheftMultiplayer.Shared;
@@ -9,91 +8,142 @@ namespace VehicleInfoLoader.Data
 {
     public sealed class VehicleManifest
     {
-        public VehicleHash hash              { get; internal set; }
-        public string name                   { get; internal set; }
-        public string displayName            { get; internal set; }
-        public string localizedName          { get; internal set; }
-        public string manufacturerName       { get; internal set; }
-        public string localizedManufacturer  { get; internal set; }
+        [JsonProperty("hash")]
+        public VehicleHash Hash              { get; internal set; }
         
-        public int vehicleClass              { get; internal set; }
-        public string vehicleClassName       { get; internal set; }
-        public string localizedVehicleClass  { get; internal set; }
+        [JsonProperty("name")]
+        public string Name                   { get; internal set; }
         
-        public int wheelType                 { get; internal set; }
-        public string wheelTypeName          { get; internal set; }
-        public string localizedWheelType     { get; internal set; }
+        [JsonProperty("displayName")]
+        public string DisplayName            { get; internal set; }
+        
+        [JsonProperty("localizedName")]
+        public string LocalizedName          { get; internal set; }
+        
+        [JsonProperty("manufacturerName")]
+        public string ManufacturerName       { get; internal set; }
+        
+        [JsonProperty("localizedManufacturer")]
+        public string LocalizedManufacturer  { get; internal set; }
+        
+        [JsonProperty("vehicleClass")]
+        public int VehicleClass              { get; internal set; }
+        
+        [JsonProperty("vehicleClassName")]
+        public string VehicleClassName       { get; internal set; }
+        
+        [JsonProperty("localizedVehicleClass")]
+        public string LocalizedVehicleClass  { get; internal set; }
+        
+        [JsonProperty("wheelType")]
+        public int WheelType                 { get; internal set; }
+        
+        [JsonProperty("wheelTypeName")]
+        public string WheelTypeName          { get; internal set; }
+        
+        [JsonProperty("localizedWheelType")]
+        public string LocalizedWheelType     { get; internal set; }
 
-        public bool convertible              { get; internal set; }
-        public bool electric                 { get; internal set; }
-        public bool trailer                  { get; internal set; }
-        public bool neon                     { get; internal set; }
-        public VehicleDimensions dimensions  { get; internal set; }
-
-        public ReadOnlyDictionary<string, int> bones { get; internal set; }
+        [JsonProperty("convertible")]
+        public bool Convertible              { get; internal set; }
         
-        public float maxSpeed                { get; internal set; }
-        public float maxBraking              { get; internal set; }
-        public float maxTraction             { get; internal set; }
-        public float maxAcceleration         { get; internal set; }
-        public float _0xBFBA3BA79CFF7EBF     { get; internal set; } 
+        [JsonProperty("electric")]
+        public bool Electric                 { get; internal set; }
+        
+        [JsonProperty("trailer")]
+        public bool Trailer                  { get; internal set; }
+        
+        [JsonProperty("neon")]
+        public bool Neon                     { get; internal set; }
+        
+        [JsonProperty("dimensions")]
+        public VehicleDimensions Dimensions  { get; internal set; }
+
+        [JsonProperty("bones")]
+        public ReadOnlyDictionary<string, int> Bones { get; internal set; }
+        
+        [JsonProperty("maxSpeed")]
+        public float MaxSpeed                { get; internal set; }
+        
+        [JsonProperty("maxBraking")]
+        public float MaxBraking              { get; internal set; }
+        
+        [JsonProperty("maxTraction")]
+        public float MaxTraction             { get; internal set; }
+        
+        [JsonProperty("maxAcceleration")]
+        public float MaxAcceleration         { get; internal set; }
+        
+        [JsonProperty]
+        public float _0xBFBA3BA79CFF7EBF     { get; internal set; }
+        
+        [JsonProperty]
         public float _0x53409B5163D5B846     { get; internal set; }
+        
+        [JsonProperty]
         public float _0xC6AD107DDC9054CC     { get; internal set; }
+        
+        [JsonProperty]
         public float _0x5AA3F878A178C4FC     { get; internal set; }
-        public int maxNumberOfPassengers     { get; internal set; }
-        public int maxOccupants              { get; internal set; }
         
-        public string[] rewards              { get; internal set; }
+        [JsonProperty("maxNumberOfPassengers")]
+        public int MaxNumberOfPassengers     { get; internal set; }
         
-        [JsonProperty]
-        internal Dictionary<int, VehicleModType> mods;
+        [JsonProperty("maxOccupants")]
+        public int MaxOccupants              { get; internal set; }
         
-        [JsonProperty]
-        internal LiveryCollection liveries;
+        [JsonProperty("rewards")]
+        public string[] Rewards              { get; internal set; }
+        
+        [JsonProperty("mods")]
+        internal Dictionary<int, VehicleModType> ModList;
+        
+        [JsonProperty("liveries")]
+        internal LiveryCollection LiveryList;
         
         
 
-        public bool HasMods => mods.Any();
-        public IEnumerable<int> ModTypes => mods?.Keys ?? Enumerable.Empty<int>();
+        public bool HasMods => ModList.Any();
+        public IEnumerable<int> ModTypes => ModList?.Keys ?? Enumerable.Empty<int>();
         
         public bool HasMod(int type, int mod = 0) => Mod(type, mod) != null;
-        public VehicleModType ModType(int type) => mods?[type];
+        public VehicleModType ModType(int type) => ModList?[type];
         
         public VehicleMod Mod(int type, int mod)
         {
-            if (mods == null || !mods.ContainsKey(type)) return null;
+            if (ModList == null || !ModList.ContainsKey(type)) return null;
             return ModType(type)?.Mod(mod);
         }
 
         public IEnumerable<int> ModIds(int type)
         {
             if (!HasMod(type)) return Enumerable.Empty<int>();
-            return ModType(type)?.list?.Keys ?? Enumerable.Empty<int>();
+            return ModType(type)?.List?.Keys ?? Enumerable.Empty<int>();
         }
 
         public IEnumerable<VehicleMod> Mods(int type)
         {
             if (!HasMod(type)) return Enumerable.Empty<VehicleMod>();
-            return ModType(type)?.list?.Values ?? Enumerable.Empty<VehicleMod>();
+            return ModType(type)?.List?.Values ?? Enumerable.Empty<VehicleMod>();
         }
 
         public Dictionary<int, Dictionary<int, string>> ValidMods()
         {
-            return mods.ToDictionary(m => m.Key, m => m.Value.Mods().ToDictionary(t => t.Key, t => t.Value.name));
+            return ModList.ToDictionary(m => m.Key, m => m.Value.Mods().ToDictionary(t => t.Key, t => t.Value.Name));
         }
 
         public bool HasLiveries                 => LiveryIds.Any();
-        public IEnumerable<int> LiveryIds       => liveries?.list?.Keys ?? Enumerable.Empty<int>();
-        public IEnumerable<Livery> Liveries     => liveries?.list?.Values ?? Enumerable.Empty<Livery>();
+        public IEnumerable<int> LiveryIds       => LiveryList?.List?.Keys ?? Enumerable.Empty<int>();
+        public IEnumerable<Livery> Liveries     => LiveryList?.List?.Values ?? Enumerable.Empty<Livery>();
         public int LiveryCount                  => Liveries.Count();
 
         public bool HasLivery(int id)           => Livery(id) != null;
-        public Livery Livery(int id)            => !HasLiveries ? null : liveries?.list[id];
+        public Livery Livery(int id)            => !HasLiveries ? null : LiveryList?.List[id];
 
-        public bool HasBone(int boneIndex)      => bones.Any(k => k.Value == boneIndex);
-        public bool HasBone(string boneName)    => bones.ContainsKey(boneName);
-        public IEnumerable<string> GetBoneNames() => bones.Select(s => s.Key);
-        public IEnumerable<int> GetBoneIndexes()  => bones.Select(s => s.Value);
+        public bool HasBone(int boneIndex)      => Bones.Any(k => k.Value == boneIndex);
+        public bool HasBone(string boneName)    => Bones.ContainsKey(boneName);
+        public IEnumerable<string> GetBoneNames() => Bones.Select(s => s.Key);
+        public IEnumerable<int> GetBoneIndexes()  => Bones.Select(s => s.Value);
 
     }
 }

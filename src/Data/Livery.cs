@@ -1,10 +1,16 @@
-﻿// ReSharper disable InconsistentNaming
+﻿using Newtonsoft.Json;
+
 namespace VehicleInfoLoader.Data
 {
     public class Livery
     {
-        public int id                { get; internal set; }
-        public string name           { get; internal set; }
-        public string localizedName  { get; internal set; }
+        [JsonProperty("id")]
+        public int Id { get; internal set; }
+        
+        [JsonProperty("name")]
+        public string Name { get; internal set; }
+        
+        [JsonProperty("localizedName")]
+        public string LocalizedName { get; internal set; }
     }
 }

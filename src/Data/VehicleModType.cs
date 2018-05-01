@@ -1,29 +1,34 @@
-﻿// ReSharper disable InconsistentNaming
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace VehicleInfoLoader.Data
 {
     public sealed class VehicleModType
     {
-        public int amount { get; internal set; }
+        [JsonProperty("amount")]
+        public int Amount { get; internal set; }
         
-        [JsonProperty]
-        internal Dictionary<int, VehicleMod> list;
+        [JsonProperty("list")]
+        internal Dictionary<int, VehicleMod> List;
 
-        public IReadOnlyDictionary<int, VehicleMod> Mods() => list;
-        
+        public IReadOnlyDictionary<int, VehicleMod> Mods()
+        {
+            return List;
+        }
+
         public VehicleMod Mod(int mod)
         {
-            if (list == null || !list.ContainsKey(mod))
+            if (List == null || !List.ContainsKey(mod))
             {
                 return null;
             }
             
-            return list[mod];
+            return List[mod];
         }
 
-        public bool HasMod(int mod)     => Mod(mod) != null;
-
+        public bool HasMod(int mod)
+        {
+            return Mod(mod) != null;
+        }
     }
 }

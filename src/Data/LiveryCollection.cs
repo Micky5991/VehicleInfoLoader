@@ -1,14 +1,14 @@
-﻿// ReSharper disable InconsistentNaming
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace VehicleInfoLoader.Data
 {
     internal sealed class LiveryCollection
     {
-        public int amount { get; internal set; }
+        [JsonProperty("amount")]
+        public int Amount { get; internal set; }
 
-        [JsonProperty] 
-        internal Dictionary<int, Livery> list;
+        [JsonProperty("list")]
+        internal Dictionary<int, Livery> List { get; set; }
     }
 }

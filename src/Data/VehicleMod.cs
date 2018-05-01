@@ -1,16 +1,22 @@
-﻿// ReSharper disable InconsistentNaming
-using System.Linq;
+﻿using System.Linq;
+using Newtonsoft.Json;
 
 namespace VehicleInfoLoader.Data
 {
     public sealed class VehicleMod
     {
-        public string name             { get; internal set; }
+        [JsonProperty("name")]
+        public string Name             { get; internal set; }
         
-        public string localizedName    { get; internal set; }
-        public string[] flags          { get; internal set; }
+        [JsonProperty("localizedName")]
+        public string LocalizedName    { get; internal set; }
+        
+        [JsonProperty("flags")]
+        public string[] Flags          { get; internal set; }
 
-        public bool HasFlag(string flag) => flags.Contains(flag);
-
+        public bool HasFlag(string flag)
+        {
+            return Flags.Contains(flag);
+        }
     }
 }
