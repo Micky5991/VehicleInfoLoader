@@ -84,12 +84,7 @@ namespace VehicleInfoLoader
             _cache = cache;
         }
 
-        internal static string MakePath()
-        {
-            return MakePath("");
-        }
-
-        private static string MakePath(string relativePath)
+        private static string MakePath(string relativePath = "")
         {
             return Path.GetFullPath(Path.Combine(_basePath, relativePath));
         }
