@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using GrandTheftMultiplayer.Server.API;
 using GrandTheftMultiplayer.Server.Constant;
@@ -93,7 +91,6 @@ namespace VehicleInfoLoader
                 Vehicles.Clear();
             }
         }
-        
 
         public static void Load()
         {

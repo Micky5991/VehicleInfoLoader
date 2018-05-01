@@ -54,16 +54,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Livery.cs" />
-    <Compile Include="Data\VehicleManifest.cs" />
-    <Compile Include="Data\VehicleDimensions.cs" />
-    <Compile Include="Data\LiveryCollection.cs" />
-    <Compile Include="Data\VehicleMod.cs" />
-    <Compile Include="Data\VehicleModType.cs" />
-    <Compile Include="JsonDeserialize.cs" />
-    <Compile Include="VehicleInfoLoader.cs" />
+    <Compile Include="src\Data\Livery.cs" />
+    <Compile Include="src\Data\LiveryCollection.cs" />
+    <Compile Include="src\Data\VehicleDimensions.cs" />
+    <Compile Include="src\Data\VehicleManifest.cs" />
+    <Compile Include="src\Data\VehicleMod.cs" />
+    <Compile Include="src\Data\VehicleModType.cs" />
+    <Compile Include="src\JsonDeserialize.cs" />
+    <Compile Include="src\VehicleInfoExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VehicleInfoExtensions.cs" />
+    <Compile Include="src\VehicleInfoLoader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
