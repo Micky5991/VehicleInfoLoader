@@ -1,5 +1,8 @@
-﻿namespace VehicleInfoLoader.Models
+﻿using JetBrains.Annotations;
+
+namespace VehicleInfoLoader.Models
 {
+    [PublicAPI]
     public class Vector
     {
         public float X { get; }

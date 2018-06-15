@@ -1,24 +1,38 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 
 namespace VehicleInfoLoader.Data
 {
+    [PublicAPI]
     public sealed class VehicleModType
     {
         [JsonProperty("amount")]
         public int Amount { get; internal set; }
         
         [JsonProperty("list")]
-        internal Dictionary<int, VehicleMod> List;
+        private Dictionary<int, VehicleMod> List { get; set; }
 
+        public IEnumerable<int> GetModIds()
+        {
+            return List == null ? Enumerable.Empty<int>() : List.Keys;
+        }
+
+        public IEnumerable<VehicleMod> GetMods()
+        {
+            return List == null ? Enumerable.Empty<VehicleMod>() : List.Values;
+        }
+        
         public IReadOnlyDictionary<int, VehicleMod> Mods()
         {
-            return List;
+            return List ?? new Dictionary<int, VehicleMod>();
         }
 
         public VehicleMod Mod(int mod)
         {
-            if (List == null || !List.ContainsKey(mod))
+            if (HasMod(mod) == false)
             {
                 return null;
             }
@@ -28,7 +42,7 @@ namespace VehicleInfoLoader.Data
 
         public bool HasMod(int mod)
         {
-            return Mod(mod) != null;
+            return List != null && List.ContainsKey(mod);
         }
     }
 }

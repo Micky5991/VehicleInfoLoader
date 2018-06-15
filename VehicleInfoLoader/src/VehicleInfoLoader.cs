@@ -3,11 +3,13 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using VehicleInfoLoader.Data;
 
 namespace VehicleInfoLoader
 {
+    [PublicAPI]
     public sealed class VehicleInfoLoader
     {
         private static string _basePath = $"vehicleinfo{Path.DirectorySeparatorChar}";

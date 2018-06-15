@@ -1,8 +1,10 @@
 ﻿using System.Linq;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 
 namespace VehicleInfoLoader.Data
 {
+    [PublicAPI]
     public sealed class VehicleMod
     {
         [JsonProperty("name")]
@@ -16,7 +18,7 @@ namespace VehicleInfoLoader.Data
 
         public bool HasFlag(string flag)
         {
-            return Flags.Contains(flag);
+            return Flags != null && Flags.Contains(flag);
         }
     }
 }

@@ -1,50 +1,104 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace VehicleInfoLoader.Data
 {
+    [PublicAPI]
     public sealed partial class VehicleManifest
     {
-        public bool HasMods
-        {
-            get { return ModList.Any(); }
-        }
-
         public IEnumerable<int> ModTypes
         {
-            get { return ModList?.Keys ?? Enumerable.Empty<int>(); }
+            get
+            {
+                return ModList?.Keys ?? Enumerable.Empty<int>();
+            }
         }
 
-        public bool HasMod(int type, int mod = 0)
+        public IEnumerable<int> LiveryIds
         {
-            return Mod(type, mod) != null;
+            get
+            {
+                return HasLiveries() == false ? Enumerable.Empty<int>() : LiveryList.GetLiveryIds();
+            }
         }
 
-        public VehicleModType ModType(int type)
+        public IEnumerable<Livery> Liveries
         {
-            return ModList?[type];
+            get
+            {
+                return HasLiveries() == false ? Enumerable.Empty<Livery>() : LiveryList.GetLiveries();
+            }
         }
 
-        public VehicleMod Mod(int type, int mod)
+        public int LiveryCount
         {
-            if (ModList == null || !ModList.ContainsKey(type))
+            get
+            {
+                return LiveryList == null ? 0 : LiveryList.Amount;
+            }
+        }
+
+        public bool HasLiveries()
+        {
+            return LiveryList != null && LiveryList.HasLiveries();
+        }
+        
+        public bool HasMods()
+        {
+            return ModList != null && ModList.Any();
+        }
+        
+        public bool HasMod(int type, int mod)
+        {
+            return HasModType(type) && GetModType(type).HasMod(mod);
+        }
+
+        public bool HasModType(int type)
+        {
+            return ModList != null && ModList.ContainsKey(type);
+        }
+
+        public VehicleMod GetMod(int type, int mod)
+        {
+            if (HasMod(type, mod) == false)
             {
                 return null;
             }
-            
-            return ModType(type)?.Mod(mod);
+
+            return GetModType(type).Mod(mod);
         }
 
-        public IEnumerable<int> ModIds(int type)
+        public VehicleModType GetModType(int type)
         {
-            if (!HasMod(type)) return Enumerable.Empty<int>();
-            return ModType(type)?.List?.Keys ?? Enumerable.Empty<int>();
+            if (HasModType(type) == false)
+            {
+                return null;
+            }
+
+            return ModList[type];
+        }
+
+        public IEnumerable<int> GetModIds(int type)
+        {
+            var modType = GetModType(type);
+            if (modType == null)
+            {
+                return Enumerable.Empty<int>();
+            }
+
+            return modType.GetModIds();
         }
 
         public IEnumerable<VehicleMod> Mods(int type)
         {
-            if (!HasMod(type)) return Enumerable.Empty<VehicleMod>();
-            return ModType(type)?.List?.Values ?? Enumerable.Empty<VehicleMod>();
+            var modType = GetModType(type);
+            if (modType == null)
+            {
+                return Enumerable.Empty<VehicleMod>();
+            }
+
+            return modType.GetMods();
         }
 
         public Dictionary<int, Dictionary<int, string>> ValidMods()
@@ -52,44 +106,29 @@ namespace VehicleInfoLoader.Data
             return ModList.ToDictionary(m => m.Key, m => m.Value.Mods().ToDictionary(t => t.Key, t => t.Value.Name));
         }
 
-        public bool HasLiveries
-        {
-            get { return LiveryIds.Any(); }
-        }
-
-        public IEnumerable<int> LiveryIds
-        {
-            get { return LiveryList?.List?.Keys ?? Enumerable.Empty<int>(); }
-        }
-
-        public IEnumerable<Livery> Liveries
-        {
-            get { return LiveryList?.List?.Values ?? Enumerable.Empty<Livery>(); }
-        }
-
-        public int LiveryCount
-        {
-            get { return Liveries.Count(); }
-        }
-
         public bool HasLivery(int id)
         {
-            return Livery(id) != null;
+            return LiveryList != null && LiveryList.HasLivery(id);
         }
 
         public Livery Livery(int id)
         {
-            return !HasLiveries ? null : LiveryList?.List[id];
+            if (LiveryList == null)
+            {
+                return null;
+            }
+
+            return LiveryList.GetLivery(id);
         }
 
         public bool HasBone(int boneIndex)
         {
-            return Bones.Any(k => k.Value == boneIndex);
+            return Bones != null && Bones.Values.Any(b => b == boneIndex);
         }
 
         public bool HasBone(string boneName)
         {
-            return Bones.ContainsKey(boneName);
+            return Bones != null && Bones.ContainsKey(boneName);
         }
 
         public IEnumerable<string> GetBoneNames()
