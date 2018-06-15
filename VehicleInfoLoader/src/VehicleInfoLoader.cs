@@ -52,6 +52,16 @@ namespace VehicleInfoLoader
             return await Task.Run(() => Get(vehicle));
         }
 
+        public static void Remove(VehicleManifest manifest)
+        {
+            if (manifest == null)
+            {
+                throw new ArgumentNullException(nameof(manifest));
+            }
+            
+            Remove((int) manifest.Hash);
+        } 
+
         public static void Remove(int vehicle)
         {
             _vehicles.TryRemove(vehicle, out _);
@@ -62,7 +72,7 @@ namespace VehicleInfoLoader
             _vehicles.Clear();
         }
 
-        public static void Load()
+        public static void LoadAllManifests()
         {
             string[] files = Directory.GetFiles(MakePath(), "*.json");
             
