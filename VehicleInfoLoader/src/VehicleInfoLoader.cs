@@ -36,12 +36,9 @@ namespace VehicleInfoLoader
                     ContractResolver = new EnableWriteableInternal()
                 });
 
-            if (_cache)
+            if (_cache && _vehicles.TryAdd((int) vehicleManifest.Hash, vehicleManifest) == false)
             {
-                if (_vehicles.TryAdd((int) vehicleManifest.Hash, vehicleManifest) == false)
-                {
-                    return null;
-                }
+                return null;
             }
             
             return vehicleManifest;
