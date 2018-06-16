@@ -14,7 +14,7 @@
     <copyright>Copyright 2018</copyright>
     <tags>gtmp gta5 vehicleinfo gta</tags>
 	<dependencies>
-		<dependency id="VehicleInfoLoader" version="2.0.0.0" />
+		<dependency id="VehicleInfoLoader" version="2.1.0.0" />
 	</dependencies>
   </metadata>
 </package>
