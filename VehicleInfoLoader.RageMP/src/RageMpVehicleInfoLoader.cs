@@ -1,22 +1,20 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
-using GrandTheftMultiplayer.Server.API;
-using GrandTheftMultiplayer.Server.Elements;
-using GrandTheftMultiplayer.Shared;
+using GTANetworkAPI;
 using VehicleInfoLoader.Data;
 
-namespace VehicleInfoLoader.GTMP
+namespace VehicleInfoLoader.RageMP
 {
-    public static class GtmpVehicleInfoLoader
+    public static class RageMpVehicleInfoLoader
     {
         public static VehicleManifest Manifest(this Vehicle vehicle)
         {
-            return VehicleInfoLoader.Get(vehicle.model);
+            return VehicleInfoLoader.Get((int) vehicle.Model);
         }
 
         public static async Task<VehicleManifest> ManifestAsync(this Vehicle vehicle)
         {
-            return await VehicleInfoLoader.GetAsync(vehicle.model);
+            return await VehicleInfoLoader.GetAsync((int) vehicle.Model);
         }
 
         public static VehicleManifest Get(VehicleHash hash)
@@ -29,9 +27,9 @@ namespace VehicleInfoLoader.GTMP
             return VehicleInfoLoader.GetAsync((int) hash);
         }
 
-        public static void Setup(API api, string path = null, bool cache = true)
+        public static void Setup(Script scriptEngine, string path = null, bool cache = true)
         {
-            VehicleInfoLoader.Setup(Path.Combine(api.getResourceFolder(), path ?? $"vehicleInfo{Path.DirectorySeparatorChar}"), cache);
+            VehicleInfoLoader.Setup(Path.Combine(NAPI.Resource.GetResourceFolder(scriptEngine), path ?? $"vehicleInfo{Path.DirectorySeparatorChar}"), cache);
         }
     }
 }
