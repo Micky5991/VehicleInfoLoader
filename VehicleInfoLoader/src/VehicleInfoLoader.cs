@@ -15,22 +15,21 @@ namespace VehicleInfoLoader
         private static string _basePath = $"vehicleinfo{Path.DirectorySeparatorChar}";
         private static bool _cache = true;
         private static readonly ConcurrentDictionary<int, VehicleManifest> _vehicles = new ConcurrentDictionary<int, VehicleManifest>();
-        
+
         public static VehicleManifest Get(int vehicle)
         {
             if (_cache && _vehicles.TryGetValue(vehicle, out var manifest))
             {
                 return manifest;
             }
-            
-            string path = MakePath(vehicle + ".json");
-            if (!File.Exists(path))
+
+            var path = MakePath(vehicle + ".json");
+            if (File.Exists(path) == false)
             {
                 throw new FileNotFoundException($"Could not find '{path}'");
             }
 
-            var vehicleManifest = JsonConvert.DeserializeObject<VehicleManifest>(
-                File.ReadAllText(path), 
+            var vehicleManifest = JsonConvert.DeserializeObject<VehicleManifest>(File.ReadAllText(path),
                 new JsonSerializerSettings
                 {
                     ContractResolver = new EnableWriteableInternal()
@@ -40,7 +39,7 @@ namespace VehicleInfoLoader
             {
                 return null;
             }
-            
+
             return vehicleManifest;
         }
 
@@ -55,14 +54,14 @@ namespace VehicleInfoLoader
             {
                 throw new ArgumentNullException(nameof(manifest));
             }
-            
+
             Remove((int) manifest.Hash);
-        } 
+        }
 
         public static void Remove(int vehicle)
         {
             _vehicles.TryRemove(vehicle, out _);
-        } 
+        }
 
         public static void Clear()
         {
@@ -71,8 +70,8 @@ namespace VehicleInfoLoader
 
         public static void LoadAllManifests()
         {
-            string[] files = Directory.GetFiles(MakePath(), "*.json");
-            
+            var files = Directory.GetFiles(MakePath(), "*.json");
+
             foreach (var file in files)
             {
                 Get(Convert.ToInt32(Path.GetFileNameWithoutExtension(file)));

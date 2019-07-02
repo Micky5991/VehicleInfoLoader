@@ -11,6 +11,7 @@ namespace VehicleInfoLoader
             var property = base.CreateProperty(member, memberSerialization);
 
             property.Writable = true;
+
             return property;
         }
     }
