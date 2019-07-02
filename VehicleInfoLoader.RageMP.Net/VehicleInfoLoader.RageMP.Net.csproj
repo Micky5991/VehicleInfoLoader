@@ -2,14 +2,18 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
+        <Version>2.2.0.0</Version>
+        <Description>This library utilizes the Micky5991/GT-MP-vehicleInfo and provides a simple way to get information about vehicles in GTA V</Description>
+        <Copyright>Copyright 2019</Copyright>
+        <PackageTags>ragemp gta5 vehicleinfo gta</PackageTags>
+        <RepositoryUrl>https://github.com/Micky5991/VehicleInfoLoader</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/Micky5991/VehicleInfoLoader</PackageProjectUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="AlternateLife.RageMP.Net" Version="1.2.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\VehicleInfoLoader\VehicleInfoLoader.csproj" />
+      <PackageReference Include="VehicleInfoLoader" Version="2.2.0.0" />
     </ItemGroup>
 
 </Project>
