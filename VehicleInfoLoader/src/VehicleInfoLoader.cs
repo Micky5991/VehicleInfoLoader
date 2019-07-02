@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -10,15 +9,20 @@ using VehicleInfoLoader.Data;
 namespace VehicleInfoLoader
 {
     [PublicAPI]
-    public sealed class VehicleInfoLoader
+    public static class VehicleInfoLoader
     {
         private static string _basePath = $"vehicleinfo{Path.DirectorySeparatorChar}";
         private static bool _cache = true;
         private static readonly ConcurrentDictionary<int, VehicleManifest> _vehicles = new ConcurrentDictionary<int, VehicleManifest>();
 
+        private static readonly JsonSerializerSettings _serializerSettings = new JsonSerializerSettings
+        {
+            ContractResolver = new EnableWriteableInternal()
+        };
+
         public static VehicleManifest Get(int vehicle)
         {
-            if (_cache && _vehicles.TryGetValue(vehicle, out var manifest))
+            if (TryGetCachedManifest(vehicle, out var manifest))
             {
                 return manifest;
             }
@@ -30,14 +34,21 @@ namespace VehicleInfoLoader
             }
 
             var vehicleManifest = JsonConvert.DeserializeObject<VehicleManifest>(File.ReadAllText(path),
-                new JsonSerializerSettings
-                {
-                    ContractResolver = new EnableWriteableInternal()
-                });
+                _serializerSettings);
 
-            if (_cache && _vehicles.TryAdd((int) vehicleManifest.Hash, vehicleManifest) == false)
+            if (_cache == false)
             {
-                return null;
+                return vehicleManifest;
+            }
+
+            if (vehicleManifest != null && _vehicles.TryAdd((int) vehicleManifest.Hash, vehicleManifest) == false)
+            {
+                if (TryGetCachedManifest(vehicle, out var existingManifest) == false)
+                {
+                    return null;
+                }
+
+                return existingManifest;
             }
 
             return vehicleManifest;
@@ -87,6 +98,17 @@ namespace VehicleInfoLoader
         private static string MakePath(string relativePath = "")
         {
             return Path.GetFullPath(Path.Combine(_basePath, relativePath));
+        }
+
+        private static bool TryGetCachedManifest(int vehicle, out VehicleManifest existingManifest)
+        {
+            if (_cache == false || _vehicles.TryGetValue(vehicle, out existingManifest) == false)
+            {
+                existingManifest = null;
+                return false;
+            }
+
+            return true;
         }
 
     }
