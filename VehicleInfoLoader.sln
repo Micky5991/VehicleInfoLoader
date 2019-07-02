@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleInfoLoader", "Vehicl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleInfoLoader.RageMP", "VehicleInfoLoader.RageMP\VehicleInfoLoader.RageMP.csproj", "{A9137CB9-8D2E-4D65-9393-E294BFE0DD0D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleInfoLoader.RageMP.Net", "VehicleInfoLoader.RageMP.Net\VehicleInfoLoader.RageMP.Net.csproj", "{D60C60A7-64E7-4F17-AE35-FF9F2E4027FC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A9137CB9-8D2E-4D65-9393-E294BFE0DD0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9137CB9-8D2E-4D65-9393-E294BFE0DD0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9137CB9-8D2E-4D65-9393-E294BFE0DD0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D60C60A7-64E7-4F17-AE35-FF9F2E4027FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D60C60A7-64E7-4F17-AE35-FF9F2E4027FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D60C60A7-64E7-4F17-AE35-FF9F2E4027FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D60C60A7-64E7-4F17-AE35-FF9F2E4027FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
